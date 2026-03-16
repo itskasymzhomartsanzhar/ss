@@ -34,7 +34,10 @@ def _split_env(name, default=''):
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-unsafe-change-me')
 DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = _split_env('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
+ALLOWED_HOSTS = _split_env(
+    'DJANGO_ALLOWED_HOSTS',
+    'localhost,127.0.0.1,swiftstore.su,www.swiftstore.su',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -121,8 +124,14 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL_ORIGINS') == '1' or (
     DEBUG and os.environ.get('CORS_ALLOW_ALL_ORIGINS', '1') == '1'
 )
-CORS_ALLOWED_ORIGINS = _split_env('CORS_ALLOWED_ORIGINS')
-CSRF_TRUSTED_ORIGINS = _split_env('CSRF_TRUSTED_ORIGINS')
+CORS_ALLOWED_ORIGINS = _split_env(
+    'CORS_ALLOWED_ORIGINS',
+    'https://swiftstore.su,https://www.swiftstore.su',
+)
+CSRF_TRUSTED_ORIGINS = _split_env(
+    'CSRF_TRUSTED_ORIGINS',
+    'https://swiftstore.su,https://www.swiftstore.su',
+)
 
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
