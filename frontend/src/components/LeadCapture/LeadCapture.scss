@@ -85,6 +85,12 @@ $cta: #1dcf83;
     cursor: pointer;
   }
 
+  &__submit:disabled {
+    background: #c9d6cf;
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+
   &__status {
     font-size: 14px;
   }

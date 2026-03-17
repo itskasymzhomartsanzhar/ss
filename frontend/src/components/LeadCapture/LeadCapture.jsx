@@ -7,6 +7,7 @@ export default function LeadCapture() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState('idle')
   const [showThanks, setShowThanks] = useState(false)
+  const isPhoneFilled = phone.trim().length > 0
 
   const formatPhoneFromDigits = (digits) => {
     const rest = digits.slice(1)
@@ -155,7 +156,7 @@ export default function LeadCapture() {
               onChange={handlePhoneChange}
             />
 
-            <button className="lead-capture__submit" type="submit" disabled={isSubmitting}>
+            <button className="lead-capture__submit" type="submit" disabled={!isPhoneFilled || isSubmitting}>
               {showThanks ? 'Спасибо' : isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
             </button>
             {submitStatus === 'success' ? (
