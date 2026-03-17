@@ -222,14 +222,6 @@ $button-border: #d6d8dd;
 }
 
 @media (max-width: 1100px) {
-  .telegram-channel {
-    min-height: auto;
-  }
-
-  .telegram-channel__sticky {
-    position: static;
-  }
-
   .telegram-channel__content {
     grid-template-columns: 1fr;
   }
@@ -245,6 +237,16 @@ $button-border: #d6d8dd;
   .telegram-channel__phone-cloud {
     max-width: 460px;
     bottom: -14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .telegram-channel {
+    --step-scroll: 140px;
+  }
+
+  .telegram-channel__sticky {
+    top: 72px;
   }
 }
 

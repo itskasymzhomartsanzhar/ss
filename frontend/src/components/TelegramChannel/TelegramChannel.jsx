@@ -191,10 +191,6 @@ export default function TelegramChannel() {
     }
 
     const onScroll = () => {
-      if (window.innerWidth < 960) {
-        setActiveIndex(0)
-        return
-      }
       if (raf) return
       raf = window.requestAnimationFrame(() => {
         raf = 0
