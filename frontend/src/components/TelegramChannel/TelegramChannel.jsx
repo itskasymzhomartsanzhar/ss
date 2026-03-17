@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import telegramIcon from '../../assets/telegram.png'
 import testButtonIcon from '../../assets/testbtn.webp'
 import image1 from '../../assets/1.png'
@@ -63,6 +63,9 @@ const featureImages = {
   brand: image2,
   analytics: image5,
 }
+
+const phoneImages = [image1, image2, image3, image4, image5]
+const imageSequence = features.map((feature) => featureImages[feature.id] || image1)
 
 function FeatureIcon({ type }) {
   if (type === 'cart') {
@@ -168,12 +171,59 @@ function FeatureIcon({ type }) {
 }
 
 export default function TelegramChannel() {
-  const defaultImage = featureImages.catalog
-  const [activeImage, setActiveImage] = useState(defaultImage)
+  const sectionRef = useRef(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeImage = imageSequence[activeIndex] || image1
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return undefined
+
+    let raf = 0
+    const updateIndex = () => {
+      const rect = section.getBoundingClientRect()
+      const start = window.scrollY + rect.top
+      const total = section.offsetHeight - window.innerHeight
+      const progress = total > 0 ? (window.scrollY - start) / total : 0
+      const clamped = Math.min(1, Math.max(0, progress))
+      const nextIndex = Math.min(features.length - 1, Math.floor(clamped * features.length))
+      setActiveIndex((prev) => (prev === nextIndex ? prev : nextIndex))
+    }
+
+    const onScroll = () => {
+      if (window.innerWidth < 960) {
+        setActiveIndex(0)
+        return
+      }
+      if (raf) return
+      raf = window.requestAnimationFrame(() => {
+        raf = 0
+        updateIndex()
+      })
+    }
+
+    updateIndex()
+    window.addEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll)
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) {
+        window.cancelAnimationFrame(raf)
+      }
+    }
+  }, [])
 
   return (
-    <section className="telegram-channel" id="features">
-      <div className="telegram-channel__inner">
+    <section
+      className="telegram-channel"
+      id="features"
+      ref={sectionRef}
+      style={{ '--steps': features.length }}
+    >
+      <div className="telegram-channel__sticky">
+        <div className="telegram-channel__inner">
         <h2 className="telegram-channel__title">
           Превратите{' '}
           <span className="telegram-channel__telegram">
@@ -184,21 +234,28 @@ export default function TelegramChannel() {
 
         <div className="telegram-channel__content">
           <div className="telegram-channel__phone" aria-hidden="true">
-            <img className="telegram-channel__phone-image" src={activeImage} alt="" />
+            <div className="telegram-channel__phone-frame">
+              {phoneImages.map((image) => (
+                <img
+                  className={`telegram-channel__phone-image ${
+                    image === activeImage ? 'is-active' : ''
+                  }`}
+                  src={image}
+                  alt=""
+                  key={image}
+                />
+              ))}
+            </div>
             <img className="telegram-channel__phone-cloud" src={cloudImage} alt="" />
           </div>
 
           <div className="telegram-channel__panel">
-
-            <div className="telegram-channel__list" onMouseLeave={() => setActiveImage(defaultImage)}>
-              {features.map((feature) => {
-                const image = featureImages[feature.id] || defaultImage
-                return (
-                  <article
-                    className="telegram-channel__card"
-                    key={feature.id}
-                    onMouseEnter={() => setActiveImage(image)}
-                  >
+            <div className="telegram-channel__list">
+              {features.map((feature, index) => (
+                <article
+                  className={`telegram-channel__card ${index === activeIndex ? 'is-active' : ''}`}
+                  key={feature.id}
+                >
                   <span className="telegram-channel__icon" aria-hidden="true">
                     <FeatureIcon type={feature.icon} />
                   </span>
@@ -206,9 +263,8 @@ export default function TelegramChannel() {
                     <h3>{feature.title}</h3>
                     <p>{feature.text}</p>
                   </div>
-                  </article>
-                )
-              })}
+                </article>
+              ))}
             </div>
           </div>
         </div>
@@ -226,6 +282,7 @@ export default function TelegramChannel() {
             Написать в Telegram
           </a>
         </div>
+      </div>
       </div>
     </section>
   )

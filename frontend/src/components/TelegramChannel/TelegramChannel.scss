@@ -8,7 +8,16 @@ $accent-green: #21c77f;
 $button-border: #d6d8dd;
 
 .telegram-channel {
+  --steps: 7;
+  --step-scroll: 180px;
   padding: 70px 0 90px;
+  position: relative;
+  min-height: calc(100vh + (var(--steps) - 1) * var(--step-scroll));
+
+  &__sticky {
+    position: sticky;
+    top: 90px;
+  }
 
   &__inner {
     width: min(1540px, 100%);
@@ -54,12 +63,30 @@ $button-border: #d6d8dd;
     justify-content: center;
     padding-bottom: 24px;
 
-    &-image {
+    &-frame {
+      position: relative;
       width: 100%;
       max-width: 480px;
-      height: auto;
-      display: block;
+      aspect-ratio: 484 / 853;
       margin-left: 60px;
+    }
+
+    &-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      display: block;
+      pointer-events: none;
+    }
+
+    &-image.is-active {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     &-cloud {
@@ -87,12 +114,20 @@ $button-border: #d6d8dd;
 
   &__card {
     background: #F9F9F9;
+    border: 2px solid transparent;
     border-radius: 15px;
     padding: 18px 20px;
     display: grid;
     align-items: center;
     grid-template-columns: 32px 1fr;
     gap: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+
+  &__card.is-active {
+    border-color: $accent-green;
+    background: #fff;
+    box-shadow: 0 16px 34px rgba(33, 199, 127, 0.18);
   }
 
   &__icon {
@@ -177,7 +212,7 @@ $button-border: #d6d8dd;
     gap: 60px;
   }
 
-  .telegram-channel__phone-image {
+  .telegram-channel__phone-frame {
     margin-left: 0;
   }
 
@@ -187,6 +222,14 @@ $button-border: #d6d8dd;
 }
 
 @media (max-width: 1100px) {
+  .telegram-channel {
+    min-height: auto;
+  }
+
+  .telegram-channel__sticky {
+    position: static;
+  }
+
   .telegram-channel__content {
     grid-template-columns: 1fr;
   }
