@@ -46,6 +46,7 @@ $card-bg: #ffffff;
     display: flex;
     align-items: center;
     margin-bottom: 18px;
+    justify-content: flex-start;
   }
 
   &__card-title {
@@ -128,9 +129,6 @@ $card-bg: #ffffff;
       padding: 22px 22px 26px;
     }
 
-    &__icon-wrap {
-      justify-content: flex-start;
-    }
 
     &__card-title {
       font-size: 18px;
