@@ -34,10 +34,9 @@ def _split_env(name, default=''):
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-unsafe-change-me')
 DEBUG = True
 
-ALLOWED_HOSTS = _split_env(
-    'DJANGO_ALLOWED_HOSTS',
-    'localhost,127.0.0.1,swiftstore.su,www.swiftstore.su',
-)
+ALLOWED_HOSTS = [
+    'localhost', '127.0.0.1', 'swiftstore.su', 'www.swiftstore.su',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
