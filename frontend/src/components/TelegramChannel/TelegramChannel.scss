@@ -257,11 +257,11 @@ $button-border: #d6d8dd;
   }
 
   .telegram-channel__phone-frame {
-    max-width: 380px;
+    max-width: 340px;
   }
 
   .telegram-channel__phone-cloud {
-    max-width: 400px;
+    max-width: 360px;
   }
 }
 
@@ -298,5 +298,13 @@ $button-border: #d6d8dd;
       font-size: 16px;
       padding: 14px 22px;
     }
+  }
+
+  .telegram-channel__phone-frame {
+    max-width: 300px;
+  }
+
+  .telegram-channel__phone-cloud {
+    max-width: 320px;
   }
 }
