@@ -3,10 +3,10 @@ import telegramIcon from '../../assets/telegram.png'
 import './Footer.scss'
 
 const links = [
-  { label: 'Разработка Mini Apps и IT-продуктов', href: '#' },
-  { label: 'ИИ-автоматизация бизнеса под ключ', href: '#' },
-  { label: 'Telegram-канал про AI в бизнесе', href: '#' },
-  { label: 'Telegram-канал с 35+ кейсами и отзывами', href: '#' },
+  { label: 'Разработка Mini Apps и IT-продуктов', href: 'https://swiftagency.ru/' },
+  { label: 'ИИ-автоматизация бизнеса под ключ', href: 'https://swiftagents.ru/' },
+  { label: 'Telegram-канал про AI в бизнесе', href: 'https://t.me/swiftagencyru' },
+  { label: 'Telegram-канал с 35+ кейсами и отзывами', href: 'https://t.me/swiftagencycases' },
 ]
 
 export default function Footer() {
