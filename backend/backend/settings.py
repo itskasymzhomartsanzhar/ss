@@ -32,7 +32,7 @@ def _split_env(name, default=''):
 
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-unsafe-change-me')
-DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
+DEBUG = True
 
 ALLOWED_HOSTS = _split_env(
     'DJANGO_ALLOWED_HOSTS',
